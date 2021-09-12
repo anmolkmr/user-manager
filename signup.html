@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="login-box">
+    <h1>Sign up</h1>
+    <form action="signup.php" method="post">
+        <div class="textbox">
+            <i class="fas fa-user"></i>
+            <input id="fname" name="fname" type="text" placeholder="First name">
+        </div>
+
+        <div class="textbox">
+            <i class="fas fa-user"></i>
+            <input id="lname" name="lname" type="text" placeholder="Last name">
+        </div>
+
+        <div class="textbox">
+            <i class="fa fa-mobile" aria-hidden="true"></i>
+            <input id="ph" name="ph" type="text" placeholder="Mobile">
+        </div>
+
+        <div class="textbox">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+            <input id="user_name" name="user_name" type="text" placeholder="User name">
+        </div>
+
+        <div class="textbox" style="display: none">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+            <input id="otp_text" name="otp_text" type="text" placeholder="User name" style="display: none">
+        </div>
+
+        <div class="textbox" style="display: none">
+            <i class="fa fa-user-circle" aria-hidden="true"></i>
+            <input id="fingerprint_text" name="fingerprint_text" type="text" placeholder="User name">
+        </div>
+
+        <div class="textbox">
+            <i class="fa fa-key" aria-hidden="true"></i>
+            <input id="password" name="password" type="password" placeholder="Password">
+        </div>
+
+        <div class="textbox">
+            <i class="fa fa-key" aria-hidden="true"></i>
+            <input id="cpassword" name="cpassword" type="password" placeholder="Confirm Password">
+        </div>
+        <div class="textbox">
+            <label class="container">OTP
+                <input type="checkbox" id="otp" name="otp">
+                <span class="checkmark"></span>
+            </label>
+
+            <label class="container">Fingerprint
+                <input type="checkbox" id="fprint" name="fprint">
+                <span class="checkmark"></span>
+            </label>
+        </div>
+
+        <input type="submit" name="register" class="btn" value="Register">
+        <input type="reset" class="btn" value="Reset">
+        <input type="button" class="btn" id="random" value="Randomize" onclick="random()">
+
+        <div class="textbox" style="display: none;">
+            <i class="fa fa-key" aria-hidden="true"></i>
+            <input id="test_user" name="test_user" type="number">
+        </div>
+
+    </form>
+</div>
+
+
+<script>
+    function random() {
+        document.getElementById("fname").value = capitalizeFirst(randomStr());
+        document.getElementById("lname").value = capitalizeFirst(randomStr());
+        document.getElementById("user_name").value = randomStr();
+        document.getElementById("ph").value = randomPhone();
+        document.getElementById("password").value = "1"
+        document.getElementById("cpassword").value = "1";
+        document.getElementById("otp").onchange = function () {
+            if (document.getElementById("otp").checked === true) {
+                document.getElementById("otp_text").value = getOTP();
+                console.log("otp sent");
+            }
+        }
+        document.getElementById("fprint").onchange = function () {
+            if (document.getElementById("fprint").checked === true) {
+                document.getElementById("fingerprint_text").value = getFingerPrintSignature();
+                console.log("put finger on scanner");
+            }
+        }
+    }
+
+    function getOTP() {
+        // return document.getElementById("user_name").value
+        return document.getElementById("user_name").value.concat(document.getElementById("ph").value);
+    }
+
+    function getFingerPrintSignature() {
+        return "12345";
+    }
+
+    const inTesting = true;
+    if (inTesting) {
+        document.getElementById("test_user").value = 1;
+        random();
+    } else {
+        document.getElementById("test_user").value = 0;
+        document.getElementById("random").style.display = "none";
+    }
+
+    function randomStr() {
+        const len = 10;
+        return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, len);
+    }
+
+    function randomPhone() {
+        const len = 10;
+        return "9" + Math.floor(Math.random() * 1000000000);
+    }
+
+    function capitalizeFirst(str) {
+        const first = str.charAt(0).toUpperCase();
+        return first + str;
+    }
+</script>
+</body>
+</html>
