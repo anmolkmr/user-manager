@@ -58,6 +58,8 @@ function auth_task()
             if ($two_fa_method == "fingerprint") {
                 $saved_fp_hash = $row["fingerprint_hash"];
                 $isMatched = matchFingerPrint($saved_fp_hash);
+                if(!$isMatched)
+                echo '<script>console.log("isMatched"); </script>';//ak
             } else {
                 $isMatched = $two_fa == $row["otp_key"];
             }
